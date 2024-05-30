@@ -1,0 +1,6 @@
+FROM debian:12
+RUN apt-get update && apt-get install -y build-essential
+COPY . /usr/src/helwor
+WORKDIR /usr/src/helwor
+RUN g++ -o helloworld main.cpp
+CMD ["./helloworld"]

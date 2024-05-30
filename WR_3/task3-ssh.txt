@@ -1,0 +1,20 @@
+$cd ~
+$mkdir task3debian12ssh && cd task3debian12ssh
+$nano Dockerfile-task3ssh
+$podman build -t debian12ssh -f Dockerfile-task3ssh
+$podman run -dit -p 2222:22 --name ssh_debian12 debian12ssh
+$podman ps -all //to check if it is running
+$hostname -I //to get the ip address
+$ssh -l root -p 2222 ipaddress //in my case 172.18.229.91
+$yes
+$parola
+$exit
+
+Contents of "Dockerfile-task3ssh":
+FROM debian:12
+RUN apt-get update && apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN echo 'root:parola' | chpasswd
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' etc/ssh/sshd_config
+EXPOSE 22
+CMD ["/usr/sbin/sshd","-d"]

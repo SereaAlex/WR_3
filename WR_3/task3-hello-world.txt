@@ -1,0 +1,24 @@
+$cd ~
+$sudo apt install podman
+$mkdir demo-debian12
+$nano main.cpp
+$nano Dockerfile-debian12
+$podman build -t debian12 -f Dockerfile-debian12
+$podman run debian12
+
+Contents of "main.cpp":
+
+#include <iostream>
+
+int main()
+{std::cout<<"Hello World"<<std::endl;
+return 0;}
+
+Contents of "Dockerfile-debian12":
+
+FROM debian:12
+RUN apt-get update && apt-get install -y build-essential
+COPY . /usr/src/helwor
+WORKDIR /usr/src/helwor
+RUN g++ -o helloworld main.cpp
+CMD ["./helloworld"]
